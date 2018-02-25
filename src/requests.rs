@@ -17,7 +17,7 @@ fn get_hostname_and_path(url: &str) -> Result<(String, String), ()> {
     Ok((url[start..end].to_string(), path))
 }
 
-pub fn build_path(path: &str, mut args: Vec<(&str, &str)>) -> String {
+fn build_path(path: &str, mut args: Vec<(&str, &str)>) -> String {
     let mut path = path.to_string();
     if args.len() == 0 {return path;}
     path.push('?');
@@ -38,7 +38,7 @@ pub fn build_path(path: &str, mut args: Vec<(&str, &str)>) -> String {
     path
 }
 
-pub trait Stream: Read + Write {}
+trait Stream: Read + Write {}
 impl<T> Stream for T where T: Read + Write {}
 
 fn get_stream(host: &str, url: &str) -> Result<Box<Stream>, ()> {
