@@ -22,17 +22,17 @@ fn build_path(path: &str, mut args: Vec<(&str, &str)>) -> String {
     if args.len() == 0 {return path;}
     path.push('?');
     let (k1, v1) = args.pop().unwrap();
-    path += &k1;
+    path += &k1.replace(' ', "+");
     if v1.len() > 0 {
         path.push('=');
-        path += &v1;
+        path += &v1.replace(' ', "+");
     }
     for (key, val) in args {
         path.push('&');
-        path += &key;
+        path += &key.replace(' ', "+");
         if val.len() > 0 {
             path.push('=');
-            path += &val;
+            path += &val.replace(' ', "+");
         }
     }
     path
@@ -73,9 +73,9 @@ fn get_raw(url: &str, mut args: Vec<(&str, &str)>) -> Result<String, ()> {
 }
 
 pub struct Response {
-    code: i32,
-    status: String,
-    text: String
+    pub code: i32,
+    pub status: String,
+    pub text: String
 }
 
 pub fn get(url: &str, mut args: Vec<(&str, &str)>) -> Result<Response, ()> {
