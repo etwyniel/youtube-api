@@ -5,16 +5,17 @@ pub mod requests;
 
 pub struct YoutubeAPI {
     pub key: String,
-    pub single_request: bool
+    pub single_request: bool,
+    stream: Option<Box<requests::Stream>>
 }
 
 impl YoutubeAPI {
     pub fn new(key: &str, single_request: bool) -> YoutubeAPI {
-        YoutubeAPI {key: key.to_string(), single_request}
+        YoutubeAPI {key: key.to_string(), single_request, stream: None}
     }
 
     pub fn get_video_url(&self, query: &str) -> String {
-        let mut args = vec![("key", &self.key[..]),
+        let args = vec![("key", &self.key[..]),
                         ("type", "video"),
                         ("q", query),
                         ("part", "snippet")];
